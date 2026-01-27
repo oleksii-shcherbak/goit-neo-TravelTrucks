@@ -6,3 +6,5 @@ export const selectCatalogFilters = state => state.catalog.filters;
 export const selectIsLoadMoreAvailable = state => state.catalog.isLoadMoreAvailable;
 export const selectFavorites = state => state.favorites.items;
 export const selectIsFavorite = id => state => state.favorites.items.includes(id);
+export const selectCamper = state => state.camper;
+export const selectCamperData = state => state.camper.data;
