@@ -4,3 +4,5 @@ export const selectCatalogLoading = state => state.catalog.isLoading;
 export const selectCatalogError = state => state.catalog.error;
 export const selectCatalogFilters = state => state.catalog.filters;
 export const selectIsLoadMoreAvailable = state => state.catalog.isLoadMoreAvailable;
+export const selectFavorites = state => state.favorites.items;
+export const selectIsFavorite = id => state => state.favorites.items.includes(id);

@@ -3,6 +3,7 @@ import Price from '../../../../components/Price/Price';
 import Location from '../../../../components/Location/Location';
 import Rating from '../../../../components/Rating/Rating';
 import Button from '../../../../components/Button/Button';
+import LikeButton from '../../../../components/LikeButton/LikeButton';
 
 export default function CatalogItem({ item }) {
     const mainImage = item.gallery?.[0]?.thumb || '';
@@ -22,6 +23,7 @@ export default function CatalogItem({ item }) {
                     <h2 className="text-h2">{item.name}</h2>
                     <div className="flex items-center gap-2">
                         <Price price={item.price} />
+                        <LikeButton camperId={item.id} />
                     </div>
                 </div>
 
