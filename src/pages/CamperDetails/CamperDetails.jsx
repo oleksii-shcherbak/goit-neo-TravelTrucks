@@ -10,6 +10,7 @@ import { selectCamper } from '../../redux/selectors';
 import { useEffect, useState } from 'react';
 import { fetchCamper } from '../../redux/thunks';
 import AsyncStateHandler from '../../components/AsyncStateHandler/AsyncStateHandler';
+import CamperDetailsFeatures from './components/CamperDetailsFeatures/CamperDetailsFeatures';
 
 const TABS = ['Features', 'Reviews'];
 
@@ -56,7 +57,7 @@ export default function CamperDetails() {
                             <div className="flex">
                                 <div className="flex-1">
                                     {activeTab === 'Features' ? (
-                                        <div>Features content</div>
+                                        <CamperDetailsFeatures />
                                     ) : (
                                         <div>Reviews content</div>
                                     )}
