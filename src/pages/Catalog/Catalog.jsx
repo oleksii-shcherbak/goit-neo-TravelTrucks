@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/Header/Header';
 import CatalogList from './components/CatalogList/CatalogList';
+import CatalogFilters from './components/CatalogFilters/CatalogFilters';
 import AsyncStateHandler from '../../components/AsyncStateHandler/AsyncStateHandler';
 import Button from '../../components/Button/Button';
 import { fetchCampers } from '../../redux/thunks';
@@ -38,7 +39,7 @@ function Catalog() {
             <div className="container mt-12 pb-20">
                 <div className="flex gap-16">
                     <div className="w-[360px]">
-                        <p>Filters will be here</p>
+                        <CatalogFilters />
                     </div>
 
                     <div className="flex-1">
