@@ -1,9 +1,14 @@
+import Header from '../../components/Header/Header';
+
 function Catalog() {
     return (
-        <div>
-            <h1>Catalog</h1>
-            <p>Browse available campers</p>
-        </div>
+        <>
+            <Header />
+            <div className="container">
+                <h1>Catalog</h1>
+                <p>Browse available campers</p>
+            </div>
+        </>
     );
 }
 

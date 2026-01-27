@@ -1,9 +1,14 @@
+import Header from '../../components/Header/Header';
+
 function Home() {
     return (
-        <div>
-            <h1>Home Page</h1>
-            <p>Camper rental service</p>
-        </div>
+        <>
+            <Header />
+            <div className="container">
+                <h1>Home Page</h1>
+                <p>Camper rental service</p>
+            </div>
+        </>
     );
 }
 
