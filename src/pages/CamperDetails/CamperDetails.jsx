@@ -12,6 +12,7 @@ import { fetchCamper } from '../../redux/thunks';
 import AsyncStateHandler from '../../components/AsyncStateHandler/AsyncStateHandler';
 import CamperDetailsFeatures from './components/CamperDetailsFeatures/CamperDetailsFeatures';
 import CamperDetailsReviews from './components/CamperDetailsReviews/CamperDetailsReviews';
+import CamperDetailsContactForm from './components/CamperDetailsContactForm/CamperDetailsContactForm';
 
 const TABS = ['Features', 'Reviews'];
 
@@ -64,7 +65,7 @@ export default function CamperDetails() {
                                     )}
                                 </div>
                                 <div className="w-[641px]">
-                                    <div>Booking form will be here</div>
+                                    <CamperDetailsContactForm />
                                 </div>
                             </div>
                         </>
