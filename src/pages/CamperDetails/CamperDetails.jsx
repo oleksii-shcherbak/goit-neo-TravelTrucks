@@ -1,4 +1,5 @@
 import { useParams, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/Header/Header';
 import Rating from '../../components/Rating/Rating';
 import Price from '../../components/Price/Price';
@@ -35,6 +36,14 @@ export default function CamperDetails() {
 
     return (
         <>
+            <Helmet>
+                <title>TravelTrucks</title>
+                <meta
+                    name="description"
+                    content="You can find everything you want in our catalog"
+                />
+            </Helmet>
+            <Header />
             <Header />
             <div className="container mt-12 pb-20">
                 <AsyncStateHandler isLoading={isLoading} isError={error}>

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/Header/Header';
 import CatalogList from './components/CatalogList/CatalogList';
 import CatalogFilters from './components/CatalogFilters/CatalogFilters';
@@ -35,6 +36,14 @@ function Catalog() {
 
     return (
         <>
+            <Helmet>
+                <title>Catalog - TravelTrucks</title>
+                <meta
+                    name="description"
+                    content="Browse our catalog of available campers and motorhomes. Filter by location, vehicle type, and equipment to find your perfect rental."
+                />
+            </Helmet>
+            <Header />
             <Header />
             <div className="container mt-12 pb-20">
                 <div className="flex gap-16">

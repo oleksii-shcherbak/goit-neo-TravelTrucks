@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import styles from './Home.module.scss';
@@ -12,6 +13,14 @@ function Home() {
 
     return (
         <>
+            <Helmet>
+                <title>TravelTrucks - Campers of your dreams</title>
+                <meta
+                    name="description"
+                    content="Find and rent the perfect camper for your next adventure. Browse our catalog of quality motorhomes and campers across Ukraine."
+                />
+            </Helmet>
+            <Header />
             <Header />
             <div className={styles.wrapper}>
                 <div className="container h-full flex flex-col justify-center">
