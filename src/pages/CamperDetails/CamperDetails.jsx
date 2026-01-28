@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { fetchCamper } from '../../redux/thunks';
 import AsyncStateHandler from '../../components/AsyncStateHandler/AsyncStateHandler';
 import CamperDetailsFeatures from './components/CamperDetailsFeatures/CamperDetailsFeatures';
+import CamperDetailsReviews from './components/CamperDetailsReviews/CamperDetailsReviews';
 
 const TABS = ['Features', 'Reviews'];
 
@@ -59,7 +60,7 @@ export default function CamperDetails() {
                                     {activeTab === 'Features' ? (
                                         <CamperDetailsFeatures />
                                     ) : (
-                                        <div>Reviews content</div>
+                                        <CamperDetailsReviews />
                                     )}
                                 </div>
                                 <div className="w-[641px]">
