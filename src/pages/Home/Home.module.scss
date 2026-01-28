@@ -1,0 +1,6 @@
+.wrapper {
+  background-image: url('../../assets/home.webp');
+  height: calc(100vh - 72px); // 72px - header height
+  background-repeat: no-repeat;
+  background-size: cover;
+}
