@@ -9,25 +9,25 @@ const CamperDetails = lazy(() => import('./pages/CamperDetails/CamperDetails'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 function App() {
-    return (
-        <>
-            <Suspense
-                fallback={
-                    <div className="flex justify-center items-center h-screen">
-                        <Spinner />
-                    </div>
-                }
-            >
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/catalog" element={<Catalog />} />
-                    <Route path="/catalog/:id" element={<CamperDetails />} />
-                    <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-            </Suspense>
-            <Toaster position="top-right" />
-        </>
-    );
+  return (
+    <>
+      <Suspense
+        fallback={
+          <div className="flex justify-center items-center h-screen">
+            <Spinner />
+          </div>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/catalog/:id" element={<CamperDetails />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
+      <Toaster position="top-right" />
+    </>
+  );
 }
 
 export default App;

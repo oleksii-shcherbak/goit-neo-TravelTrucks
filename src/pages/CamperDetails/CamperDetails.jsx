@@ -18,69 +18,69 @@ import CamperDetailsContactForm from './components/CamperDetailsContactForm/Camp
 const TABS = ['Features', 'Reviews'];
 
 export default function CamperDetails() {
-    const dispatch = useDispatch();
-    const params = useParams();
-    const location = useLocation();
-    const { data, isLoading, error } = useSelector(selectCamper);
-    const [activeTab, setActiveTab] = useState(
-        location.state?.openReviews ? 'Reviews' : 'Features'
-    );
+  const dispatch = useDispatch();
+  const params = useParams();
+  const location = useLocation();
+  const { data, isLoading, error } = useSelector(selectCamper);
+  const [activeTab, setActiveTab] = useState(
+    location.state?.openReviews ? 'Reviews' : 'Features'
+  );
 
-    useEffect(() => {
-        dispatch(fetchCamper({ id: params.id }));
-    }, [dispatch, params.id]);
+  useEffect(() => {
+    dispatch(fetchCamper({ id: params.id }));
+  }, [dispatch, params.id]);
 
-    const handleReviewsClick = () => {
-        setActiveTab('Reviews');
-    };
+  const handleReviewsClick = () => {
+    setActiveTab('Reviews');
+  };
 
-    return (
-        <>
-            <Helmet>
-                <title>TravelTrucks</title>
-                <meta
-                    name="description"
-                    content="You can find everything you want in our catalog"
+  return (
+    <>
+      <Helmet>
+        <title>TravelTrucks</title>
+        <meta
+          name="description"
+          content="You can find everything you want in our catalog"
+        />
+      </Helmet>
+      <Header />
+      <Header />
+      <div className="container mt-12 pb-20">
+        <AsyncStateHandler isLoading={isLoading} isError={error}>
+          {data ? (
+            <>
+              <h1 className="text-h2 mb-2">{data.name}</h1>
+              <div className="flex item-center mb-4">
+                <Rating
+                  rating={data.rating}
+                  totalReviews={data.reviews.length}
+                  className="mr-4"
+                  onClick={handleReviewsClick}
                 />
-            </Helmet>
-            <Header />
-            <Header />
-            <div className="container mt-12 pb-20">
-                <AsyncStateHandler isLoading={isLoading} isError={error}>
-                    {data ? (
-                        <>
-                            <h1 className="text-h2 mb-2">{data.name}</h1>
-                            <div className="flex item-center mb-4">
-                                <Rating
-                                    rating={data.rating}
-                                    totalReviews={data.reviews.length}
-                                    className="mr-4"
-                                    onClick={handleReviewsClick}
-                                />
-                                <Location location={data.location} />
-                            </div>
-                            <Price price={data.price} className="mb-[28px]" />
-                            <CamperDetailsGallery photos={data.gallery} />
-                            <p className="mt-[28px] text-text">{data.description}</p>
+                <Location location={data.location} />
+              </div>
+              <Price price={data.price} className="mb-[28px]" />
+              <CamperDetailsGallery photos={data.gallery} />
+              <p className="mt-[28px] text-text">{data.description}</p>
 
-                            <Tabs activeTab={activeTab} list={TABS} onChange={setActiveTab} />
+              <Tabs activeTab={activeTab} list={TABS} onChange={setActiveTab} />
 
-                            <div className="flex">
-                                <div className="flex-1">
-                                    {activeTab === 'Features' ? (
-                                        <CamperDetailsFeatures />
-                                    ) : (
-                                        <CamperDetailsReviews />
-                                    )}
-                                </div>
-                                <div className="w-[641px]">
-                                    <CamperDetailsContactForm />
-                                </div>
-                            </div>
-                        </>
-                    ) : null}
-                </AsyncStateHandler>
-            </div>
-        </>
-    );
+              <div className="flex">
+                <div className="flex-1">
+                  {activeTab === 'Features' ? (
+                    <CamperDetailsFeatures />
+                  ) : (
+                    <CamperDetailsReviews />
+                  )}
+                </div>
+                <div className="w-[641px]">
+                  <CamperDetailsContactForm />
+                </div>
+              </div>
+            </>
+          ) : null}
+        </AsyncStateHandler>
+      </div>
+    </>
+  );
 }
