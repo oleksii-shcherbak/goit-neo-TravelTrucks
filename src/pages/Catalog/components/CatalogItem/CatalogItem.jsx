@@ -4,6 +4,7 @@ import Location from '../../../../components/Location/Location';
 import Rating from '../../../../components/Rating/Rating';
 import Button from '../../../../components/Button/Button';
 import LikeButton from '../../../../components/LikeButton/LikeButton';
+import FeaturesList from '../../../../components/FeaturesList/FeaturesList';
 
 export default function CatalogItem({ item }) {
     const mainImage = item.gallery?.[0]?.thumb || '';
@@ -40,7 +41,32 @@ export default function CatalogItem({ item }) {
                 </p>
 
                 <div className="mb-6">
-                    <p className="text-gray">Features available</p>
+                    {(() => {
+                        const features = [];
+
+                        // Add transmission
+                        if (item.transmission) {
+                            features.push(item.transmission);
+                        }
+
+                        // Add engine
+                        if (item.engine) {
+                            features.push(item.engine);
+                        }
+
+                        // Add equipment
+                        const equipmentFeatures = ['AC', 'bathroom', 'kitchen', 'TV', 'radio'];
+                        equipmentFeatures.forEach(feature => {
+                            if (item[feature]) {
+                                features.push(feature);
+                            }
+                        });
+
+                        // Show only first 5 features
+                        const displayFeatures = features.slice(0, 5);
+
+                        return <FeaturesList features={displayFeatures} />;
+                    })()}
                 </div>
 
                 <Link to={`/catalog/${item.id}`} target="_blank">
