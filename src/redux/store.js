@@ -10,27 +10,29 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import catalogReducer from './catalogSlice';
-import camperReducer from './camperSlice';
-import favoritesReducer from './favoritesSlice';
 
-const favoritesPersistConfig = {
-  key: 'favorites',
+import catalogSlice from './catalogSlice';
+import favoritesSlice from './favoritesSlice';
+import camperSlice from './camperSlice';
+
+const persistConfig = {
+  key: 'root',
   storage,
+  blacklist: ['register'],
 };
 
 export const store = configureStore({
   reducer: {
-    catalog: catalogReducer,
-    camper: camperReducer,
-    favorites: persistReducer(favoritesPersistConfig, favoritesReducer),
+    catalog: catalogSlice,
+    camper: camperSlice,
+    favorites: persistReducer(persistConfig, favoritesSlice),
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
 });
 
 export const persistor = persistStore(store);

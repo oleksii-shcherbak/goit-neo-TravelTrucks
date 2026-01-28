@@ -1,57 +1,45 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const BASE_URL = 'https://66b1f8e71ca8ad33d4f5f63e.mockapi.io';
-const ITEMS_PER_PAGE = 8;
+axios.defaults.baseURL = 'https://66b1f8e71ca8ad33d4f5f63e.mockapi.io';
 
-export const fetchCampers = createAsyncThunk(
-  'catalog/fetchCampers',
-  async ({ page = 1, filters = {} }, { rejectWithValue }) => {
-    try {
-      const params = new URLSearchParams({
-        page,
-        limit: ITEMS_PER_PAGE,
-      });
+export const fetchCatalog = createAsyncThunk(
+    'catalog/fetchItems',
+    async ({ page, limit, location, type, ...equipmentFilters }, thunkAPI) => {
+      try {
+        // Transform "automatic" filter to "transmission" parameter
+        const params = {
+          page,
+          limit,
+          ...(location && { search: location }),
+          ...(type && { form: type }),
+        };
 
-      // Add location filter
-      if (filters.location) {
-        params.append('location', filters.location);
-      }
-
-      // Add vehicle type filter
-      if (filters.vehicleType) {
-        params.append('form', filters.vehicleType);
-      }
-
-      // Add equipment filters
-      const equipmentFilters = { ...filters.equipment };
-      if (equipmentFilters.automatic) {
-        params.append('transmission', 'automatic');
-        delete equipmentFilters.automatic;
-      }
-
-      Object.keys(equipmentFilters).forEach(key => {
-        if (equipmentFilters[key]) {
-          params.append(key, 'true');
+        // Handle automatic separately - it's a transmission type, not a boolean feature
+        if (equipmentFilters.automatic) {
+          params.transmission = 'automatic';
+          delete equipmentFilters.automatic;
         }
-      });
 
-      const response = await axios.get(`${BASE_URL}/campers`, { params });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
+        // Add remaining equipment filters
+        Object.assign(params, equipmentFilters);
+
+        const response = await axios.get('/campers', { params });
+        return response.data;
+      } catch (e) {
+        return thunkAPI.rejectWithValue(e.message);
+      }
     }
-  }
 );
 
 export const fetchCamper = createAsyncThunk(
-  'camper/fetchCamper',
-  async ({ id }, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${BASE_URL}/campers/${id}`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
+    'camper/fetch',
+    async ({ id }, thunkAPI) => {
+      try {
+        const response = await axios.get(`/campers/${id}`);
+        return response.data;
+      } catch (e) {
+        return thunkAPI.rejectWithValue(e.message);
+      }
     }
-  }
 );

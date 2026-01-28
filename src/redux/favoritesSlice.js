@@ -1,25 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  items: [],
+  favoriteIds: [],
 };
 
 const favoritesSlice = createSlice({
   name: 'favorites',
   initialState,
   reducers: {
-    toggleFavorite: (state, action) => {
-      const id = action.payload;
-      const index = state.items.indexOf(id);
-
-      if (index !== -1) {
-        state.items.splice(index, 1);
-      } else {
-        state.items.push(id);
-      }
+    toggleFavorite(state, action) {
+      state.favoriteIds = state.favoriteIds.includes(action.payload)
+          ? state.favoriteIds.filter(id => id !== action.payload)
+          : [...state.favoriteIds, action.payload];
     },
   },
 });
 
-export const { toggleFavorite } = favoritesSlice.actions;
+export const selectFavorites = state => state.favorites;
+
+export const favoritesActions = favoritesSlice.actions;
+
 export default favoritesSlice.reducer;
