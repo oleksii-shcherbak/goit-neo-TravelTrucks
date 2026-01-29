@@ -1,4 +1,4 @@
-import { useId, useState } from 'react';
+import { useState } from 'react';
 import Input from '../../../../components/Input/Input';
 import { useDispatch } from 'react-redux';
 import Icon from '../../../../components/Icon/Icon';
@@ -12,7 +12,6 @@ import {
 } from '../../../../constants/constants';
 
 export default function CatalogFilters() {
-  const id = useId();
   const dispatch = useDispatch();
   const [filters, setFilters] = useState({
     location: '',
@@ -55,13 +54,12 @@ export default function CatalogFilters() {
 
   return (
     <div className="basis-[360px] shrink-0 mr-16">
-      <label className="text-gray mb-2 inline-block" htmlFor={id}>
+      <label className="text-gray mb-2 inline-block">
         Location
       </label>
       <Input
         value={filters.location}
         onChange={event => handleChangeFilter('location', event.target.value)}
-        id={id}
         placeholder="City"
         icon={<Icon name="map" />}
         className="mb-10"

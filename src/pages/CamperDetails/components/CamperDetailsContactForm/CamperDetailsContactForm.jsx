@@ -52,6 +52,7 @@ export default function CamperDetailsContactForm() {
               name="name"
               id="booking-name"
               placeholder="Name*"
+              autoComplete="name"
               component={FormInput}
             />
             <ErrorMessage name="name" />
@@ -66,19 +67,20 @@ export default function CamperDetailsContactForm() {
               name="email"
               id="booking-email"
               placeholder="Email*"
+              autoComplete="email"
               component={FormInput}
             />
             <ErrorMessage name="email" />
           </div>
 
           <div className="mb-[14px]">
-            <label htmlFor="booking-date" className="sr-only">
+            <label htmlFor="date" className="sr-only">
               Booking date
             </label>
             <Field
               type="date"
               name="date"
-              id="booking-date"
+              id="date"
               placeholder="Booking date*"
               component={Datepicker}
             />

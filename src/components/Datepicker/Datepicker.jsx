@@ -7,6 +7,8 @@ export default function Datepicker({ field, form, ...props }) {
 
   return (
     <DatePicker
+      id={field.name}
+      name={field.name}
       selected={field.value}
       onChange={date => form.setFieldValue(field.name, date)}
       onBlur={() => form.setFieldTouched(field.name, true)}
@@ -15,6 +17,7 @@ export default function Datepicker({ field, form, ...props }) {
       placeholderText={props.placeholder}
       calendarStartDay={1}
       portalId="datepicker-portal"
+      autoComplete="off"
       className={clsx(
         'block w-full bg-inputs p-[18px] h-[60px] rounded-xl placeholder:text-gray text-main border transition-colors focus:outline-none focus:ring-0 cursor-pointer',
         {
