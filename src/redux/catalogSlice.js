@@ -44,10 +44,8 @@ const catalogSlice = createSlice({
         if (state.data?.items) {
           // Prevent duplicates by filtering out items that already exist
           const existingIds = new Set(state.data.items.map(item => item.id));
-          const newItems = action.payload.items.filter(
-            item => !existingIds.has(item.id)
-          );
-
+          const newItems = action.payload.items.filter(item => !existingIds.has(item.id));
+          
           state.data = {
             total: action.payload.total,
             items: [...state.data.items, ...newItems],

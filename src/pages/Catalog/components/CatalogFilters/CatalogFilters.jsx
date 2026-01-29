@@ -1,96 +1,105 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useId, useState } from 'react';
 import Input from '../../../../components/Input/Input';
+import { useDispatch } from 'react-redux';
+import Icon from '../../../../components/Icon/Icon';
 import FilterButton from '../../../../components/FilterButton/FilterButton';
 import Button from '../../../../components/Button/Button';
-import Icon from '../../../../components/Icon/Icon';
 import { catalogActions } from '../../../../redux/catalogSlice';
+import { capitalizeFirstLetter } from '../../../../helpers/capitalizeFirstLetter/capitalizeFirstLetter';
 import {
-  VEHICLE_TYPES,
   EQUIPMENT_OPTIONS,
+  VEHICLE_TYPES,
 } from '../../../../constants/constants';
 
 export default function CatalogFilters() {
+  const id = useId();
   const dispatch = useDispatch();
-  const [location, setLocation] = useState('');
-  const [vehicleType, setVehicleType] = useState('');
-  const [equipment, setEquipment] = useState({});
+  const [filters, setFilters] = useState({
+    location: '',
+    equipment: {},
+    type: '',
+  });
 
-  const handleVehicleTypeClick = value => {
-    setVehicleType(prev => (prev === value ? '' : value));
+  const handleChangeFilter = (filterName, value) => {
+    if (filterName === 'location') {
+      setFilters(prevState => ({
+        ...prevState,
+        location: value,
+      }));
+    }
+    if (filterName === 'equipment') {
+      setFilters(prevState => {
+        const result = {
+          ...prevState,
+          equipment: { ...prevState.equipment },
+        };
+        if (result.equipment[value]) {
+          delete result.equipment[value];
+        } else {
+          result.equipment[value] = true;
+        }
+        return result;
+      });
+    }
+    if (filterName === 'type') {
+      setFilters(prevState => ({
+        ...prevState,
+        type: prevState.type === value ? '' : value,
+      }));
+    }
   };
 
-  const handleEquipmentClick = value => {
-    setEquipment(prev => ({
-      ...prev,
-      [value]: !prev[value],
-    }));
-  };
-
-  const handleSearch = () => {
-    dispatch(
-        catalogActions.applyFilters({
-          location,
-          type: vehicleType,
-          equipment,
-        })
-    );
+  const handleApplyFilters = () => {
+    dispatch(catalogActions.applyFilters(filters));
   };
 
   return (
-    <div>
-      <div className="mb-8">
-        <label className="block mb-2 text-gray">Location</label>
-        <div className="relative">
-          <Icon
-            name="map"
-            className="absolute left-[18px] top-1/2 -translate-y-1/2 text-main"
-          />
-          <Input
-            type="text"
-            placeholder="City"
-            value={location}
-            onChange={e => setLocation(e.target.value)}
-            className="pl-[44px]"
-          />
-        </div>
-      </div>
-
-      <div className="mb-8">
-        <p className="mb-2 text-gray">Filters</p>
-        <h3 className="text-h3 mb-6">Vehicle equipment</h3>
-        <div className="border-b pb-6 mb-6">
-          <div className="grid grid-cols-3 gap-2">
-            {EQUIPMENT_OPTIONS.map(option => (
-                <FilterButton
-                    key={option.name}
-                    name={option.name}
-                    icon={option.icon}
-                    isActive={equipment[option.name]}
-                    onClick={() => handleEquipmentClick(option.name)}
-                />
-            ))}
-          </div>
-        </div>
-
-        <h3 className="text-h3 mb-6">Vehicle type</h3>
-        <div className="grid grid-cols-3 gap-2">
-          {VEHICLE_TYPES.map(type => (
+    <div className="basis-[360px] shrink-0 mr-16">
+      <label className="text-gray mb-2 inline-block" htmlFor={id}>
+        Location
+      </label>
+      <Input
+        value={filters.location}
+        onChange={event => handleChangeFilter('location', event.target.value)}
+        id={id}
+        placeholder="City"
+        icon={<Icon name="map" />}
+        className="mb-10"
+      />
+      <strong className="text-text font-medium">Filters</strong>
+      <h3 className="text-h3 mt-8">Vehicle equipment</h3>
+      <hr className="my-6" />
+      <ul className="flex flex-wrap gap-3">
+        {EQUIPMENT_OPTIONS.map(item => (
+          <li key={item.name + item.icon}>
             <FilterButton
-              key={type.value}
-              name={type.label}
-              icon={type.icon}
-              isActive={vehicleType === type.value}
-              onClick={() => handleVehicleTypeClick(type.value)}
-              type="radio"
+              onClick={() => handleChangeFilter('equipment', item.name)}
+              icon={item.icon}
+              name={capitalizeFirstLetter(item.name)}
+              isActive={filters.equipment[item.name]}
             />
-          ))}
-        </div>
-      </div>
-
-      <Button onClick={handleSearch} className="w-full">
+          </li>
+        ))}
+      </ul>
+      <h3 className="text-h3 mt-8">Vehicle type</h3>
+      <hr className="my-6" />
+      <ul className="flex flex-wrap gap-3">
+        {VEHICLE_TYPES.map(item => (
+          <li key={item.value}>
+            <FilterButton
+              onClick={() => handleChangeFilter('type', item.value)}
+              icon={item.icon}
+              name={item.label}
+              isActive={filters.type === item.value}
+            />
+          </li>
+        ))}
+      </ul>
+      <Button className="mt-10" onClick={handleApplyFilters}>
         Search
       </Button>
     </div>
   );
 }
+
+
