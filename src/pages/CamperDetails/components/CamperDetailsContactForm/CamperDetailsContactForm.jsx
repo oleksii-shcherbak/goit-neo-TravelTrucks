@@ -1,63 +1,112 @@
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import FormInput from '../../../../components/FormInput/FormInput';
-import Textarea from '../../../../components/Textarea/Textarea';
-import Datepicker from '../../../../components/Datepicker/Datepicker';
 import Button from '../../../../components/Button/Button';
+import Datepicker from '../../../../components/Datepicker/Datepicker';
+import Textarea from '../../../../components/Textarea/Textarea';
+import ErrorMessage from '../../../../components/ErrorMessage/ErrorMessage';
+import FormInput from '../../../../components/FormInput/FormInput';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 
-const validationSchema = Yup.object({
+const initialValues = {
+  name: '',
+  email: '',
+  date: null,
+  comment: '',
+};
+
+const ContactFormSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, 'Name must be at least 3 characters')
-    .max(50, 'Name must be less than 50 characters')
-    .required('Name is required'),
-  email: Yup.string()
-    .email('Invalid email address')
-    .required('Email is required'),
-  bookingDate: Yup.date()
-    .min(new Date(), 'Booking date must be in the future')
-    .required('Booking date is required'),
-  comment: Yup.string()
-    .min(3, 'Comment must be at least 3 characters')
-    .max(500, 'Comment must be less than 500 characters'),
+    .min(3, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+  date: Yup.date().nullable().required('Required'),
+  comment: Yup.string().min(3, 'Too Short!').max(500, 'Too Long!'),
 });
 
 export default function CamperDetailsContactForm() {
-  const handleSubmit = (values, { resetForm }) => {
-    console.log('Booking submitted:', values);
-    toast.success('Booking request sent successfully!');
-    resetForm();
+  const handleSubmit = (_, actions) => {
+    toast.success('You have successfully booked your campervan!');
+    actions.resetForm();
   };
 
   return (
-    <div className="border rounded-[10px] p-6">
-      <h3 className="text-h3 mb-2">Book your campervan now</h3>
-      <p className="text-text mb-6">
-        Stay connected! We are always ready to help you.
-      </p>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={ContactFormSchema}
+    >
+      {({ isValid, dirty, errors, touched }) => (
+        <Form className="border rounded-[10px] py-[44px] px-[57px]">
+          <h3 className="text-h3 mb-2">Book your campervan now</h3>
+          <p className="text-gray mb-6">
+            Stay connected! We are always ready to help you.
+          </p>
 
-      <Formik
-        initialValues={{
-          name: '',
-          email: '',
-          bookingDate: null,
-          comment: '',
-        }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form className="space-y-4">
-            <FormInput name="name" label="Name*" />
-            <FormInput name="email" type="email" label="Email*" />
-            <Datepicker name="bookingDate" label="Booking date*" />
-            <Textarea name="comment" label="Comment" />
-            <Button type="submit" isLoading={isSubmitting} className="w-full">
+          <div className="mb-[14px]">
+            <label htmlFor="booking-name" className="sr-only">
+              Name
+            </label>
+            <Field
+              type="text"
+              name="name"
+              id="booking-name"
+              placeholder="Name*"
+              component={FormInput}
+            />
+            <ErrorMessage name="name" />
+          </div>
+
+          <div className="mb-[14px]">
+            <label htmlFor="booking-email" className="sr-only">
+              Email
+            </label>
+            <Field
+              type="email"
+              name="email"
+              id="booking-email"
+              placeholder="Email*"
+              component={FormInput}
+            />
+            <ErrorMessage name="email" />
+          </div>
+
+          <div className="mb-[14px]">
+            <label htmlFor="booking-date" className="sr-only">
+              Booking date
+            </label>
+            <Field
+              type="date"
+              name="date"
+              id="booking-date"
+              placeholder="Booking date*"
+              component={Datepicker}
+            />
+            <ErrorMessage name="date" />
+          </div>
+
+          <label htmlFor="booking-comment" className="sr-only">
+            Comment
+          </label>
+          <Field
+            type="text"
+            name="comment"
+            id="booking-comment"
+            placeholder="Comment"
+            component={Textarea}
+          />
+          <ErrorMessage name="comment" />
+
+          <div className="flex justify-center mt-6">
+            <Button
+              type="submit"
+              disabled={!isValid || !dirty || (errors.name && touched.name) || (errors.email && touched.email) || (errors.date && touched.date)}
+            >
               Send
             </Button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }

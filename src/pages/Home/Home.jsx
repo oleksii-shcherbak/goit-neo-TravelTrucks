@@ -1,40 +1,32 @@
-import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import styles from './Home.module.scss';
+import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import { Helmet } from 'react-helmet-async';
 
-function Home() {
+export default function Home() {
   const navigate = useNavigate();
-
-  const handleNavigate = () => {
-    navigate('/catalog');
-  };
 
   return (
     <>
       <Helmet>
-        <title>TravelTrucks - Campers of your dreams</title>
+        <title>TravelTrucks</title>
         <meta
           name="description"
-          content="Find and rent the perfect camper for your next adventure. Browse our catalog of quality motorhomes and campers across Ukraine."
+          content="You can find everything you want in our catalog"
         />
       </Helmet>
       <Header />
-      <Header />
-      <div className={styles.wrapper}>
-        <div className="container h-full flex flex-col justify-center">
-          <h1 className="text-h1 text-white mb-4 max-w-[700px]">
-            Campers of your dreams
-          </h1>
-          <p className="text-h2 text-white mb-10 max-w-[700px]">
+      <div className={clsx(styles.wrapper, 'flex flex-col justify-center')}>
+        <div className="container">
+          <h1 className="text-white text-h1 mb-4">Campers of your dreams</h1>
+          <p className="text-white mb-10 text-h2">
             You can find everything you want in our catalog
           </p>
-          <Button onClick={handleNavigate}>View Now</Button>
+          <Button onClick={() => navigate('/catalog')}>View Now</Button>
         </div>
       </div>
     </>
   );
 }
-
-export default Home;

@@ -1,29 +1,29 @@
+import clsx from 'clsx';
+import Stars from '../../../../components/Stars/Stars';
 import { useSelector } from 'react-redux';
 import { selectCamper } from '../../../../redux/selectors';
-import Stars from '../../../../components/Stars/Stars';
 
 export default function CamperDetailsReviews() {
-  const { data: camper } = useSelector(selectCamper);
+  const { data } = useSelector(selectCamper);
 
-  if (!camper || !camper.reviews) return null;
-
-  if (!camper.reviews.length) {
-    return <p className="text-text">No reviews yet</p>;
-  }
+  if (!data.reviews.length) return 'No reviews yet';
 
   return (
-    <ul className="space-y-6 pr-6">
-      {camper.reviews.map((review, index) => (
-        <li key={index} className="pb-6 border-b last:border-b-0">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-[60px] h-[60px] rounded-full bg-badges flex items-center justify-center">
-              <span className="text-h2 text-button">
-                {review.reviewer_name.charAt(0)}
-              </span>
+    <ul className="mr-10">
+      {data.reviews.map((review, idx) => (
+        <li
+          key={idx}
+          className={clsx({
+            'mb-[44px]': idx !== data.reviews.length - 1,
+          })}
+        >
+          <div className="flex items-center mb-4">
+            <div className="w-[60px] h-[60px] rounded-full bg-badges flex items-center justify-center text-button text-h2">
+              {review.reviewer_name[0].toUpperCase()}
             </div>
-            <div>
-              <p className="text-h3 mb-1">{review.reviewer_name}</p>
-              <Stars rating={review.reviewer_rating} />
+            <div className="ml-4">
+              <span className="font-medium">{review.reviewer_name}</span>
+              <Stars rating={review.reviewer_rating} className="mt-1" />
             </div>
           </div>
           <p className="text-text">{review.comment}</p>

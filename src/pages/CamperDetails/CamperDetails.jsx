@@ -1,11 +1,11 @@
 import { useParams, useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import Header from '../../components/Header/Header';
 import Rating from '../../components/Rating/Rating';
 import Price from '../../components/Price/Price';
 import Location from '../../components/Location/Location';
 import Tabs from '../../components/Tabs/Tabs';
 import CamperDetailsGallery from './components/CamperDetailsGallery/CamperDetailsGallery';
+import CamperDetailsContactForm from './components/CamperDetailsContactForm/CamperDetailsContactForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCamper } from '../../redux/selectors';
 import { useEffect, useState } from 'react';
@@ -13,7 +13,7 @@ import { fetchCamper } from '../../redux/thunks';
 import AsyncStateHandler from '../../components/AsyncStateHandler/AsyncStateHandler';
 import CamperDetailsFeatures from './components/CamperDetailsFeatures/CamperDetailsFeatures';
 import CamperDetailsReviews from './components/CamperDetailsReviews/CamperDetailsReviews';
-import CamperDetailsContactForm from './components/CamperDetailsContactForm/CamperDetailsContactForm';
+import { Helmet } from 'react-helmet-async';
 
 const TABS = ['Features', 'Reviews'];
 
@@ -43,7 +43,6 @@ export default function CamperDetails() {
           content="You can find everything you want in our catalog"
         />
       </Helmet>
-      <Header />
       <Header />
       <div className="container mt-12 pb-20">
         <AsyncStateHandler isLoading={isLoading} isError={error}>

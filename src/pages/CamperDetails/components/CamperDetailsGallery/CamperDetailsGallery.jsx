@@ -1,20 +1,22 @@
 export default function CamperDetailsGallery({ photos }) {
-  if (!photos || !photos.length) return null;
+  if (!photos.length) return null;
 
   return (
-    <div className="grid grid-cols-3 gap-[18px]">
+    <ul className="flex gap-12 flex-wrap">
       {photos.map((photo, index) => (
-        <div
-          key={index}
-          className="w-full h-[310px] rounded-[10px] overflow-hidden"
+        <li
+          key={photo.thumb}
+          className="w-[292px] h-[312px] rounded-[10px] overflow-hidden"
         >
           <img
+            className="w-full h-full object-cover object-center"
             src={photo.original}
-            alt={`Camper photo ${index + 1}`}
-            className="w-full h-full object-cover"
+            alt={`Camper view ${index + 1}`}
+            width={292}
+            height={312}
           />
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
