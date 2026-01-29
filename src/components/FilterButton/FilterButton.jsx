@@ -1,29 +1,25 @@
 import clsx from 'clsx';
 import Icon from '../Icon/Icon';
 
-export default function FilterButton({
-  name,
-  icon,
-  isActive,
-  onClick,
-  type = 'checkbox',
-}) {
+export default function FilterButton({ icon, name, isActive, onClick }) {
   return (
     <button
-      type="button"
       onClick={onClick}
+      type="button"
       aria-pressed={isActive}
       aria-label={`Filter by ${name}`}
       className={clsx(
-        'flex flex-col items-center justify-center gap-2 px-[22px] py-[17px] border rounded-[10px] transition-colors cursor-pointer',
+        'flex flex-col items-center justify-center font-medium',
+        'w-[112px] h-[96px] rounded-xl',
+        'border transition-colors duration-200',
         {
           'border-button': isActive,
-          'border-gray/20 hover:border-button': !isActive,
+          'hover:border-gray': !isActive,
         }
       )}
     >
-      <Icon name={icon} width={32} height={32} />
-      <span className="text-text">{name}</span>
+      <Icon name={icon} size={32} className="mb-2" />
+      {name}
     </button>
   );
 }

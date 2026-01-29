@@ -1,13 +1,23 @@
-export default function Icon({
-  name,
-  width = 20,
-  height = 20,
-  className,
-  ...props
-}) {
+import clsx from 'clsx';
+
+export default function Icon({ name, size = 20, className, ...props }) {
+  const defaultAttributes = {
+    ...(className && {
+      className: clsx(`icon-${name}`, className),
+    }),
+    ...(size !== 'auto' && { width: size, height: size }),
+    role: 'presentation',
+    ...(props['data-testid'] && {
+      'data-testid': props['data-testid'],
+    }),
+    'aria-hidden': true,
+  };
+
+  const href = `/icons.svg#icon-${name}`;
+
   return (
-    <svg width={width} height={height} className={className} {...props}>
-      <use href={`/icons.svg#icon-${name}`}></use>
+    <svg {...defaultAttributes} focusable="false">
+      <use href={href} />
     </svg>
   );
 }
