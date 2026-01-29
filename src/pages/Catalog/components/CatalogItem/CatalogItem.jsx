@@ -61,10 +61,7 @@ export default function CatalogItem({ item }) {
         </div>
         <p className="truncate w-[525px] text-text mb-6">{item.description}</p>
         <FeaturesList data={item} />
-        <Button
-          onClick={handleNavigate}
-          className="mt-6"
-        >
+        <Button onClick={handleNavigate} className="mt-6">
           Show more
         </Button>
       </div>

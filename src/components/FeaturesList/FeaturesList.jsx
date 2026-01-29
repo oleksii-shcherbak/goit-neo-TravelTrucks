@@ -28,7 +28,11 @@ export default function FeaturesList({ data }) {
       }
     }
     // Handle engine types (petrol, diesel, hybrid)
-    else if (feature === 'petrol' || feature === 'diesel' || feature === 'hybrid') {
+    else if (
+      feature === 'petrol' ||
+      feature === 'diesel' ||
+      feature === 'hybrid'
+    ) {
       if (data.engine === feature) {
         acc.push(feature);
       }

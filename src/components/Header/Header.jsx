@@ -15,7 +15,7 @@ const NAV = [
 export default function Header() {
   const location = useLocation();
 
-  const isActiveLink = (route) => {
+  const isActiveLink = route => {
     // For catalog, only highlight when exactly on /catalog, not on /catalog/:id
     if (route === '/catalog') {
       return location.pathname === '/catalog';

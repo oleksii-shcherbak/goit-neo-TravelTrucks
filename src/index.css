@@ -75,7 +75,8 @@ select {
   border-bottom-color: #475467 !important;
 }
 
-.react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle::before {
+.react-datepicker-popper[data-placement^='bottom']
+  .react-datepicker__triangle::before {
   border-bottom-color: white !important;
 }
 
@@ -83,7 +84,8 @@ select {
   border-top-color: #475467 !important;
 }
 
-.react-datepicker-popper[data-placement^='top'] .react-datepicker__triangle::before {
+.react-datepicker-popper[data-placement^='top']
+  .react-datepicker__triangle::before {
   border-top-color: white !important;
 }
 
@@ -136,25 +138,25 @@ h2.react-datepicker__current-month {
   text-transform: uppercase;
 }
 .react-datepicker__day-name:nth-child(1)::after {
-  content: "Mon";
+  content: 'Mon';
 }
 .react-datepicker__day-name:nth-child(2)::after {
-  content: "Tue";
+  content: 'Tue';
 }
 .react-datepicker__day-name:nth-child(3)::after {
-  content: "Wed";
+  content: 'Wed';
 }
 .react-datepicker__day-name:nth-child(4)::after {
-  content: "Thu";
+  content: 'Thu';
 }
 .react-datepicker__day-name:nth-child(5)::after {
-  content: "Fri";
+  content: 'Fri';
 }
 .react-datepicker__day-name:nth-child(6)::after {
-  content: "Sat";
+  content: 'Sat';
 }
 .react-datepicker__day-name:nth-child(7)::after {
-  content: "Sun";
+  content: 'Sun';
 }
 
 .react-datepicker__month {
@@ -189,7 +191,7 @@ h2.react-datepicker__current-month {
 }
 .react-datepicker__day--today {
   /* Поточний день */
-  background-color: #E44848;
+  background-color: #e44848;
   color: #f7f7f7;
   font-weight: 400;
   font-size: 14px;

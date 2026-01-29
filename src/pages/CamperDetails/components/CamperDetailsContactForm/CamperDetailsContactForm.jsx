@@ -102,7 +102,13 @@ export default function CamperDetailsContactForm() {
           <div className="flex justify-center mt-6">
             <Button
               type="submit"
-              disabled={!isValid || !dirty || (errors.name && touched.name) || (errors.email && touched.email) || (errors.date && touched.date)}
+              disabled={
+                !isValid ||
+                !dirty ||
+                (errors.name && touched.name) ||
+                (errors.email && touched.email) ||
+                (errors.date && touched.date)
+              }
             >
               Send
             </Button>
