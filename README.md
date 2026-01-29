@@ -6,7 +6,7 @@ Web application for camper rental services in Ukraine.
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/oleksii-shcherbak/goit-neo-TravelTrucks
 cd goit-neo-TravelTrucks
 ```
 
@@ -35,13 +35,15 @@ npm run preview
 
 ## Tech Stack
 
-- React 18.3.1
-- Vite 6.0.5
-- Redux Toolkit 2.2.8
-- React Router DOM 6.27.0
-- Tailwind CSS 3.4.14
-- Formik 2.4.6
-- Axios 1.7.7
+- React 19.2.4
+- Vite 7.3.1
+- Redux Toolkit 2.11.2
+- React Router DOM 7.13.0
+- Tailwind CSS 3.4.19
+- Formik 2.4.9
+- Axios 1.13.4
+- Yup 1.7.1
+- React Datepicker 9.1.0
 
 ## Author
 
