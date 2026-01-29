@@ -1,24 +1,14 @@
-import { Field, ErrorMessage } from 'formik';
+import clsx from 'clsx';
 
-export default function Textarea({ name, label, ...props }) {
+export default function Textarea({ field, ...props }) {
   return (
-    <div>
-      <label htmlFor={name} className="sr-only">
-        {label}
-      </label>
-      <Field
-        as="textarea"
-        id={name}
-        name={name}
-        className="w-full px-[18px] py-4 bg-inputs rounded-[10px] border-none outline-none resize-none h-[118px]"
-        placeholder={label}
-        {...props}
-      />
-      <ErrorMessage
-        name={name}
-        component="div"
-        className="text-button text-sm mt-1"
-      />
-    </div>
+    <textarea
+      {...field}
+      {...props}
+      className={clsx(
+        'block w-full bg-inputs p-[18px] h-[118px] rounded-xl resize-none placeholder:text-gray text-main border border-transparent focus:border-button focus:outline-none focus:ring-0 transition-colors',
+        props.className
+      )}
+    />
   );
 }

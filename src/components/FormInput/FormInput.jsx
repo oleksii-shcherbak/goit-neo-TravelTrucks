@@ -1,23 +1,11 @@
-import { Field, ErrorMessage } from 'formik';
+import Input from '../Input/Input';
 
-export default function FormInput({ name, label, ...props }) {
+export default function FormInput({ field, form, ...props }) {
   return (
-    <div>
-      <label htmlFor={name} className="sr-only">
-        {label}
-      </label>
-      <Field
-        id={name}
-        name={name}
-        className="w-full px-[18px] py-4 bg-inputs rounded-[10px] border-none outline-none"
-        placeholder={label}
-        {...props}
-      />
-      <ErrorMessage
-        name={name}
-        component="div"
-        className="text-button text-sm mt-1"
-      />
-    </div>
+    <Input
+      {...field}
+      {...props}
+      isError={form.touched[field.name] && form.errors[field.name]}
+    />
   );
 }
