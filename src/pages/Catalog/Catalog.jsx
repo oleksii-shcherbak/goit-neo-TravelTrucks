@@ -9,7 +9,7 @@ import { selectCatalog, selectFilters } from '../../redux/selectors';
 import { catalogActions } from '../../redux/catalogSlice';
 import Button from '../../components/Button/Button';
 import { fetchCatalog } from '../../redux/thunks';
-import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import { ITEMS_PER_PAGE } from '../../constants/constants';
 
 export default function Catalog() {
