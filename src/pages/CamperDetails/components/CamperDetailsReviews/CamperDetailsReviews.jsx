@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
-import { selectCamperData } from '../../../../redux/selectors';
+import { selectCamper } from '../../../../redux/selectors';
 import Stars from '../../../../components/Stars/Stars';
 
 export default function CamperDetailsReviews() {
-  const camper = useSelector(selectCamperData);
+  const { data: camper } = useSelector(selectCamper);
 
   if (!camper || !camper.reviews) return null;
 

@@ -4,7 +4,7 @@ import Input from '../../../../components/Input/Input';
 import FilterButton from '../../../../components/FilterButton/FilterButton';
 import Button from '../../../../components/Button/Button';
 import Icon from '../../../../components/Icon/Icon';
-import { applyFilters } from '../../../../redux/catalogSlice';
+import { catalogActions } from '../../../../redux/catalogSlice';
 import {
   VEHICLE_TYPES,
   EQUIPMENT_OPTIONS,
@@ -29,11 +29,11 @@ export default function CatalogFilters() {
 
   const handleSearch = () => {
     dispatch(
-      applyFilters({
-        location,
-        vehicleType,
-        equipment,
-      })
+        catalogActions.applyFilters({
+          location,
+          type: vehicleType,
+          equipment,
+        })
     );
   };
 
@@ -62,13 +62,13 @@ export default function CatalogFilters() {
         <div className="border-b pb-6 mb-6">
           <div className="grid grid-cols-3 gap-2">
             {EQUIPMENT_OPTIONS.map(option => (
-              <FilterButton
-                key={option.value}
-                name={option.label}
-                icon={option.icon}
-                isActive={equipment[option.value]}
-                onClick={() => handleEquipmentClick(option.value)}
-              />
+                <FilterButton
+                    key={option.name}
+                    name={option.name}
+                    icon={option.icon}
+                    isActive={equipment[option.name]}
+                    onClick={() => handleEquipmentClick(option.name)}
+                />
             ))}
           </div>
         </div>

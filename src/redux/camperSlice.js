@@ -16,11 +16,11 @@ const camperSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-        .addCase(fetchCamper.fulfilled, (state, action) => {
-          state.isLoading = false;
-          state.error = null;
-          state.data = action.payload;
-        })
+      .addCase(fetchCamper.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.data = action.payload;
+      })
       .addCase(fetchCamper.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;

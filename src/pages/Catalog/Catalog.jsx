@@ -1,82 +1,82 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Helmet } from 'react-helmet-async';
 import Header from '../../components/Header/Header';
-import CatalogList from './components/CatalogList/CatalogList';
-import CatalogFilters from './components/CatalogFilters/CatalogFilters';
 import AsyncStateHandler from '../../components/AsyncStateHandler/AsyncStateHandler';
-import Button from '../../components/Button/Button';
-import { fetchCampers } from '../../redux/thunks';
-import { loadMore } from '../../redux/catalogSlice';
-import {
-  selectCatalogData,
-  selectCatalogLoading,
-  selectCatalogError,
-  selectCatalogFilters,
-  selectIsLoadMoreAvailable,
-  selectCatalog,
-} from '../../redux/selectors';
+import CatalogFilters from './components/CatalogFilters/CatalogFilters';
+import CatalogList from './components/CatalogList/CatalogList';
 
-function Catalog() {
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { selectCatalog, selectFilters } from '../../redux/selectors';
+import { catalogActions } from '../../redux/catalogSlice';
+import Button from '../../components/Button/Button';
+import { fetchCatalog } from '../../redux/thunks';
+import { Helmet } from 'react-helmet-async';
+import { ITEMS_PER_PAGE } from '../../constants/constants';
+
+export default function Catalog() {
   const dispatch = useDispatch();
-  const data = useSelector(selectCatalogData);
-  const isLoading = useSelector(selectCatalogLoading);
-  const error = useSelector(selectCatalogError);
-  const filters = useSelector(selectCatalogFilters);
-  const isLoadMoreAvailable = useSelector(selectIsLoadMoreAvailable);
-  const { currentPage } = useSelector(selectCatalog);
+  const { data, isLoading, isLoadingMore, isLoadMoreAvailable, currentPage } =
+    useSelector(selectCatalog);
+  const filters = useSelector(selectFilters);
 
   useEffect(() => {
-    dispatch(fetchCampers({ page: currentPage, filters }));
-  }, [dispatch, currentPage, filters]);
+    dispatch(
+      fetchCatalog({
+        page: currentPage,
+        limit: ITEMS_PER_PAGE,
+        location: filters.location,
+        type: filters.type,
+        ...filters.equipment,
+      })
+    );
+  }, [
+    currentPage,
+    dispatch,
+    filters.equipment,
+    filters.location,
+    filters.type,
+  ]);
 
-  const handleLoadMore = () => {
-    dispatch(loadMore());
+  const handleFetchMore = () => {
+    dispatch(catalogActions.setCurrentPage(currentPage + 1));
   };
 
   return (
     <>
       <Helmet>
-        <title>Catalog - TravelTrucks</title>
+        <title>TravelTrucks</title>
         <meta
           name="description"
-          content="Browse our catalog of available campers and motorhomes. Filter by location, vehicle type, and equipment to find your perfect rental."
+          content="You can find everything you want in our catalog"
         />
       </Helmet>
       <Header />
-      <Header />
-      <div className="container mt-12 pb-20">
-        <div className="flex gap-16">
-          <div className="w-[360px]">
-            <CatalogFilters />
-          </div>
+      <div className="container mt-12 pb-14">
+        <div className="flex">
+          <CatalogFilters />
+          <AsyncStateHandler isLoading={isLoading}>
+            {data?.items.length ? (
+              <div className="flex-1">
+                <CatalogList items={data?.items} />
 
-          <div className="flex-1">
-            <AsyncStateHandler isLoading={isLoading && !data} isError={error}>
-              {data?.items && data.items.length > 0 ? (
-                <>
-                  <CatalogList items={data.items} />
-                  {isLoadMoreAvailable && (
-                    <div className="flex justify-center mt-12">
-                      <Button
-                        onClick={handleLoadMore}
-                        variant="secondary"
-                        isLoading={isLoading}
-                      >
-                        Load more
-                      </Button>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <p className="text-center py-20">No campers found</p>
-              )}
-            </AsyncStateHandler>
-          </div>
+                {isLoadMoreAvailable ? (
+                  <div className="flex justify-center">
+                    <Button
+                      variant="secondary"
+                      className="mt-2"
+                      onClick={handleFetchMore}
+                      isLoading={isLoadingMore}
+                    >
+                      Load more
+                    </Button>
+                  </div>
+                ) : null}
+              </div>
+            ) : (
+              'The catalog is empty'
+            )}
+          </AsyncStateHandler>
         </div>
       </div>
     </>
   );
 }
-
-export default Catalog;
