@@ -9,7 +9,7 @@ import { selectCatalog, selectFilters } from '../../redux/selectors';
 import { catalogActions } from '../../redux/catalogSlice';
 import Button from '../../components/Button/Button';
 import { fetchCatalog } from '../../redux/thunks';
-import { Helmet } from 'react-helmet-async';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { ITEMS_PER_PAGE } from '../../constants/constants';
 
 export default function Catalog() {
@@ -17,6 +17,11 @@ export default function Catalog() {
   const { data, isLoading, isLoadingMore, isLoadMoreAvailable, currentPage } =
     useSelector(selectCatalog);
   const filters = useSelector(selectFilters);
+
+  useDocumentTitle(
+    'Catalog - TravelTrucks',
+    'Browse our complete catalog of campers and motorhomes available for rent'
+  );
 
   useEffect(() => {
     dispatch(
@@ -42,13 +47,6 @@ export default function Catalog() {
 
   return (
     <>
-      <Helmet>
-        <title>TravelTrucks</title>
-        <meta
-          name="description"
-          content="You can find everything you want in our catalog"
-        />
-      </Helmet>
       <Header />
       <div className="container mt-12 pb-14">
         <div className="flex">

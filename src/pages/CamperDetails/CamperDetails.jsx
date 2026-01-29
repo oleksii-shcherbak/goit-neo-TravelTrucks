@@ -13,7 +13,7 @@ import { fetchCamper } from '../../redux/thunks';
 import AsyncStateHandler from '../../components/AsyncStateHandler/AsyncStateHandler';
 import CamperDetailsFeatures from './components/CamperDetailsFeatures/CamperDetailsFeatures';
 import CamperDetailsReviews from './components/CamperDetailsReviews/CamperDetailsReviews';
-import { Helmet } from 'react-helmet-async';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 const TABS = ['Features', 'Reviews'];
 
@@ -26,6 +26,11 @@ export default function CamperDetails() {
     location.state?.openReviews ? 'Reviews' : 'Features'
   );
 
+  useDocumentTitle(
+    data?.name ? `${data.name} - TravelTrucks` : 'Camper Details - TravelTrucks',
+    data?.description || 'View detailed information about this camper'
+  );
+
   useEffect(() => {
     dispatch(fetchCamper({ id: params.id }));
   }, [dispatch, params.id]);
@@ -36,13 +41,6 @@ export default function CamperDetails() {
 
   return (
     <>
-      <Helmet>
-        <title>TravelTrucks</title>
-        <meta
-          name="description"
-          content="You can find everything you want in our catalog"
-        />
-      </Helmet>
       <Header />
       <div className="container mt-12 pb-20">
         <AsyncStateHandler isLoading={isLoading} isError={error}>
