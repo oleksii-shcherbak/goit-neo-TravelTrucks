@@ -1,29 +1,20 @@
-import { useDispatch, useSelector } from 'react-redux';
+import clsx from 'clsx';
 import Icon from '../Icon/Icon';
-import { favoritesActions, selectFavorites } from '../../redux/favoritesSlice';
 
-export default function LikeButton({ camperId, className }) {
-  const dispatch = useDispatch();
-  const { favoriteIds } = useSelector(selectFavorites);
-  const isFavorite = favoriteIds.includes(camperId);
-
-  const handleClick = () => {
-    dispatch(favoritesActions.toggleFavorite(camperId));
-  };
-
+export default function LikeButton({ onClick, isActive, className }) {
   return (
-      <button
-          onClick={handleClick}
-          className={className}
-          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-          type="button"
-      >
-        <Icon
-            name="heart"
-            width={26}
-            height={24}
-            className={isFavorite ? 'fill-button text-button' : 'text-main'}
-        />
-      </button>
+    <button
+      type="button"
+      className={clsx('hover:[&>svg]:fill-button', className)}
+      onClick={onClick}
+    >
+      <Icon
+        name="like"
+        size={26}
+        className={clsx({
+          'fill-button': isActive,
+        })}
+      />
+    </button>
   );
 }

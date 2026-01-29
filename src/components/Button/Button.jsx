@@ -1,32 +1,34 @@
 import clsx from 'clsx';
+import Spinner from '../Spinner/Spinner';
 
 export default function Button({
-  children,
+  type = 'button',
+  onClick,
   variant = 'primary',
   className,
-  isLoading = false,
-  ...props
+  isLoading,
+  disabled,
+  children,
 }) {
   return (
     <button
+      type={type}
+      onClick={onClick}
       className={clsx(
-        'px-[60px] py-4 rounded-[200px] font-medium transition-colors',
+        'rounded-full py-4 px-14 font-medium inline-flex items-center justify-center transition-colors duration-300',
         {
-          'bg-button text-white hover:bg-button-hover': variant === 'primary',
-          'border border-gray hover:border-button': variant === 'secondary',
-          'opacity-50 cursor-not-allowed': isLoading || props.disabled,
+          'bg-button hover:bg-button-hover text-white': variant === 'primary' && !disabled,
+          'bg-white border text-main cursor-not-allowed': disabled,
+          'bg-transparent border hover:border-button-hover':
+            variant === 'secondary' && !disabled,
         },
         className
       )}
-      disabled={isLoading || props.disabled}
-      style={
-        props.disabled && variant === 'secondary'
-          ? { borderColor: '#e0e0e0' }
-          : undefined
-      }
-      {...props}
+      style={disabled ? { borderColor: '#DADDE1' } : undefined}
+      disabled={isLoading || disabled}
     >
-      {isLoading ? 'Loading...' : children}
+      {children}
+      {isLoading ? <Spinner size={24} /> : null}
     </button>
   );
 }

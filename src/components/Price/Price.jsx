@@ -1,7 +1,9 @@
+import clsx from 'clsx';
+
 export default function Price({ price, className }) {
   return (
-    <p className={className}>
-      <span className="text-h2">€{price},00</span>
-    </p>
+    <strong className={clsx('text-h2 inline-block', className)}>
+      €{price},00
+    </strong>
   );
 }

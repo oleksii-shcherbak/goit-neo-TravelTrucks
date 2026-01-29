@@ -1,19 +1,18 @@
+import clsx from 'clsx';
 import Icon from '../Icon/Icon';
 
-export default function Stars({ rating }) {
+export default function Stars({ rating, className }) {
   return (
-    <div className="flex gap-1">
-      {[1, 2, 3, 4, 5].map(star => (
+    <div className={clsx('flex items-center gap-1', className)}>
+      {Array.from({ length: 5 }).map((_, idx) => (
         <Icon
-          key={star}
-          name="star"
-          width={16}
-          height={16}
-          className={
-            star <= rating
-              ? 'fill-rating text-rating'
-              : 'fill-badges text-badges'
-          }
+          key={idx}
+          name="rating"
+          size={16}
+          className={clsx({
+            'fill-rating': idx < rating,
+            'fill-badges': idx >= rating,
+          })}
         />
       ))}
     </div>
