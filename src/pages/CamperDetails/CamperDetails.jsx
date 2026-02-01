@@ -27,7 +27,9 @@ export default function CamperDetails() {
   );
 
   useDocumentTitle(
-    data?.name ? `${data.name} - TravelTrucks` : 'Camper Details - TravelTrucks',
+    data?.name
+      ? `${data.name} - TravelTrucks`
+      : 'Camper Details - TravelTrucks',
     data?.description || 'View detailed information about this camper'
   );
 

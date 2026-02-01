@@ -74,7 +74,7 @@ select {
   border-bottom-color: #475467 !important;
 }
 
-.react-datepicker-popper[data-placement^='bottom']
+.react-datepicker-popper[data-placement^='bottom'],
 .react-datepicker__triangle::before {
   border-bottom-color: white !important;
 }
@@ -83,7 +83,7 @@ select {
   border-top-color: #475467 !important;
 }
 
-.react-datepicker-popper[data-placement^='top']
+.react-datepicker-popper[data-placement^='top'],
 .react-datepicker__triangle::before {
   border-top-color: white !important;
 }
